@@ -1,7 +1,15 @@
+use std::io::{self, BufRead, Write};
+
 fn main() {
-    let number = 5;
-    let number2 = add(number,number);
-    println!("The number is {number2}");
+    print!("Please pick a number: ");
+    let _ = io::stdout().flush();
+    let mut user_input = String::new();
+    let stdin = io::stdin();
+    let ret_input = stdin.lock().read_line(&mut user_input);
+    if let Ok(i) = ret_input {
+        println!(""); // newline
+        println!("You input {i} number of characters: {user_input}")
+    }
 }
 
 pub fn add(int1: i32, int2: i32) -> i32 {
@@ -11,7 +19,6 @@ pub fn add(int1: i32, int2: i32) -> i32 {
 fn add2(int1: i32, int2: i32) -> i32 {
     int1 + int2
 }
-
 
 
 #[cfg(test)]

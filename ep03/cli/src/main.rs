@@ -11,9 +11,9 @@ fn main() {
     let Ok(i) = ret_input else {
         return //exits application
     };
-    // can use i freely now!
+    // can use i as an int freely now!
     let print_string = handle_user_input(i, user_input);
-    println!("{print_string}")
+    println!("{print_string}");
 
     if i > 4 {
         println!("i is larger then 4");

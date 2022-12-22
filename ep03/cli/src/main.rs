@@ -24,11 +24,7 @@ fn add_five_to_string(string1: &mut String) {
 }
 
 struct Thing {
-    num: i32,
-}
-
-impl Thing {
-    
+    num: i32
 }
 
 fn add_five_to_thing(thing: &mut Thing) {

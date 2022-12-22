@@ -1,28 +1,40 @@
-use std::error::Error;
-use std::io::{self, BufRead, Write};
-use std::str::FromStr;
-
-use clap::Parser;
-
-/// Simple program to greet a person
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-   /// Name of the person to greet
-   #[arg(short, long)]
-   name: String,
-
-   /// Number of times to greet
-   #[arg(short, long, default_value_t = 1)]
-   count: u8,
-}
+#![allow(dead_code)]
+use self::Mammal::*;
 
 fn main() {
-   let args = Args::parse();
 
-   for _ in 0..args.count {
-       println!("Hello {}!", args.name)
-   }
+   let marek = Person{
+     first_name: String::from("Marek"),
+     last_name: String::from("Counts"),
+     age: 35,
+     is_admin: true,
+   };
+   let thing = Mammal::Human(marek);
+}
+
+struct Person {
+    first_name: String,
+    last_name: String,
+    age: i8,
+    is_admin: bool,
+}
+
+enum Mammal {
+    Human(Person),
+    Dog(i8,bool),
+    Cat {lives:i8,is_hungry: bool},
+    Platypus(),
+    Rabbit{age: i8},
+}
+
+fn age(mammal: Mammal) -> i8 {
+    match mammal {
+        Human(human) => human.age,
+        Dog(age,_happy ) => age,
+        Cat { lives, is_hungry: _ } => lives -1,
+        Platypus() => 1,
+        Rabbit{age} => age,
+    }
 }
 
 

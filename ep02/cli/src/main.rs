@@ -1,49 +1,31 @@
 
 fn main() {
     let n1 = 5;
+    println!("number 1 is: {n1}");
     let n2 = add5(n1);
-    println!("{n2}");
-    let mut s1 = String::from("Ive added ");
-    
-    add_five_to_string( &mut s1);
-    println!("add string: {s1}");
-    let mut thing = Thing { num: 10 };
+    println!("number 2 is: {n2}");
+    let n3 = add(n1, n2);
+    println!("number 3 is: {n3}");
 
-    add_five_to_thing(&mut thing);
-    let num = thing.num;
-    println!("Your number is: {num}")
+    /*
+     * n3 is not mutable!!!
+    n3 = 6;
+    println!("number 3 is now: {n3}");
+    */
+
+    let mut n4 = add(n3,n2);
+    println!("number 4 is: {n4}");
+    n4 = 5;
+    println!("number 4 is now: {n4}");
+
+    
+}
+
+fn add(int1: i32, int2: i32) -> i32 {
+    int1 + int2
 }
 
 pub fn add5(mut int1: i32) -> i32 {
     int1 = int1 + 5;
     return int1;
-}
-
-fn add_five_to_string(string1: &mut String) {
-    string1.push_str("Five")
-}
-
-struct Thing {
-    num: i32,
-}
-
-impl Thing {
-    
-}
-
-fn add_five_to_thing(thing: &mut Thing) {
-    thing.num = thing.num + 5;
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_add() {
-        let mut number = 5;
-        let number2 = add5(number);
-        assert_eq!(number2, number + number);
-        assert_ne!(number2, number - number);
-    }
 }

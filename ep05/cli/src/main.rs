@@ -3,3 +3,7 @@
 fn main() {
     
 }
+
+struct Human {
+    
+}

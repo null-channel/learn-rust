@@ -1,6 +1,6 @@
 fn main() {
-    println!("Hello, world!");
+    println!("Hello Marek");
     if true {
-        println!("Will not print");
+        println!("Marek was here!");
     }
 }

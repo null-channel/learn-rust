@@ -1,1 +1,0 @@
-# Varables and Functions

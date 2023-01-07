@@ -1,0 +1,1 @@
+# Rusts odd function return

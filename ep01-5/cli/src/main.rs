@@ -9,5 +9,5 @@ fn main() {
 
 fn random_number() -> i8 {
     let mut rng = rand::thread_rng();
-    rng.gen_range(100, 255)
+    rng.gen_range(100..125)
 }

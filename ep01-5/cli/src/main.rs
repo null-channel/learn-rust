@@ -7,7 +7,7 @@ fn main() {
     println!("{} + {} = {}", n1, n2, n3);
 }
 
-fn random_number() -> i8 {
+fn random_number() -> u8 {
     let mut rng = rand::thread_rng();
-    rng.gen_range(100, 255)
+    rng.gen_range(100..255)
 }

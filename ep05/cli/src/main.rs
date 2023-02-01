@@ -1,9 +1,0 @@
-
-
-fn main() {
-    
-}
-
-struct Human {
-    
-}

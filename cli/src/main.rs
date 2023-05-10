@@ -1,74 +1,59 @@
-use std::io::{self, Write};
+use std::{io::{self, Write}, num::ParseIntError, error::Error, fmt, collections::HashMap};
 
-
-fn main() -> anyhow::Result<()> {
-  
-  let opt = get_optional(2);
-  if let Some(i) = opt {
-    println!("i: {}", i);
-  }
-
-  match opt {
-    None => println!("i was none from match"),
-    Some(i) => println!("iii: {}", i)
-  }
-
-  let Some(i) = opt else {
-    println!("i was none");
-    return Ok(());
-  };
-  println!("ii: {}", i);
-
-
-
-  let month = might_fail_string("marek".into())?;
-
-  println!("the month: {}", month);
-
-  Ok(())
+struct Point2D {
+    x: i32,
+    y: i32,
 }
 
-fn get_optional(i: i32) -> Option<i32> {
-    if i > 5 {
-        return Some(i);
+struct Point(i32,i32);
+
+impl Point {
+
+}
+
+struct Marek;
+
+type SpHashMap = HashMap<String,String>;
+
+fn main() -> Result<(),Box<dyn Error>> {
+
+    let my_point = (20,20);
+
+    let p = Point(20,20);
+    let marek = Person{
+        age: 34,
+        name: "Marek".to_string()
+    };
+
+    let mut jon = Person::new(51,"jon".to_string());
+
+    let jons_age = jon.get_age();
+
+    jon.birthday();
+
+    Ok(())
+}
+
+struct Person {
+    age: i32,
+    name: String,
+}
+
+impl Person {
+    fn new(age: i32, name: String) -> Self {
+        Person { age: age, name: name }
     }
-    None
-}
 
-fn might_fail(i: i32) -> anyhow::Result<String> {
-    match i {
-        1 => Ok("January".to_string()),
-        2 => Ok("Feb".to_string()),
-        _ => Err(anyhow::anyhow!("not a month")),
+    fn get_age(&self) -> i32 {
+        self.age
+    }
+
+    fn birthday(&mut self) {
+        self.age = self.age + 1
     }
 }
 
-fn might_fail_string(s: String) -> anyhow::Result<String> {
-    match s.as_str() {
-        "January" => Ok("1".to_string()),
-        "Feb" => Ok("2".to_string()),
-        _ => Err(anyhow::anyhow!("Not a month")),
-    }
-}
 
-fn map_int_to_date_string(i: i32) -> anyhow::Result<String> {
-    let month = might_fail(i)?;
-    might_fail_string(month)
-}
-      
-fn get_input() -> String {
-    print!("Please pick a number: ");
-    let _ = io::stdout().flush();
-    let mut user_input = String::new();
-    let stdin = io::stdin();
-    let read_ret = stdin.read_line(&mut user_input);
-    println!("");
-    match read_ret {
-        Ok(u) => println!("there where {} characters read", u),
-        Err(e) => println!("there was an error: {}", e)
-    }
-    user_input
-}
 
 
 #[cfg(test)]

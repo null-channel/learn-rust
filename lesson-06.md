@@ -1,4 +1,4 @@
-# Rusty Structs
+# Rusty Enums
 
 Watch the video. learn to rust like a pro!
-https://youtu.be/OqQbRkDtq_8
+https://youtu.be/KPiPKT8Cick

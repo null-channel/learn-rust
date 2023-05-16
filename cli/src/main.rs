@@ -1,59 +1,67 @@
-use std::{io::{self, Write}, num::ParseIntError, error::Error, fmt, collections::HashMap};
+use std::{error::Error, fmt};
 
-struct Point2D {
+enum Messages {
+    Hello,
+    Quit,
+    ChangeColor(i32,i32,i32),
+    Move{x:i32, y:i32},
+    Write(String),
+    ChangePosition(Point),
+}
+
+impl Messages {
+    fn print_data(&self) {
+        match self {
+            Messages::Hello => println!("Hello"),
+            Messages::Quit => println!("Quit"),
+            Messages::ChangeColor(r,g,b) => {
+                println!("ChangeColor({}, {}, {})", r, g, b)
+            },
+            Messages::Move {x, y} => println!("Move to ({}, {})", x, y),
+            Messages::Write(s) => println!("Write {}", s),
+            Messages::ChangePosition(Point {x, y}) => println!("ChangePosition to ({}, {})", x, y),
+        }
+    }
+}
+
+struct Point {
     x: i32,
     y: i32,
 }
 
-struct Point(i32,i32);
-
-impl Point {
-
+impl fmt::Display for Messages {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Messages::Hello => write!(f, "Hello"),
+            Messages::Quit => write!(f, "Quit"),
+            Messages::ChangeColor(r,g,b) => write!(f, "ChangeColor({}, {}, {})", r, g, b),
+            Messages::Move{x, y} => write!(f, "Move to ({}, {})", x, y),
+            Messages::Write(s) => write!(f, "Write {}", s),
+            Messages::ChangePosition(Point {x, y}) => write!(f, "ChangePosition to ({}, {})", x, y),
+        }
+    }
 }
-
-struct Marek;
-
-type SpHashMap = HashMap<String,String>;
 
 fn main() -> Result<(),Box<dyn Error>> {
 
-    let my_point = (20,20);
+  let hello_message =  Messages::Hello;
+  hello_message.print_data();
+  println!("{}", hello_message);
 
-    let p = Point(20,20);
-    let marek = Person{
-        age: 34,
-        name: "Marek".to_string()
-    };
+  let point = Point {x: 1, y: 30};
+  let change_position_message = Messages::ChangePosition(point);
+  change_position_message.print_data();
 
-    let mut jon = Person::new(51,"jon".to_string());
+  let change_color_message = Messages::ChangeColor(255, 255, 255);
+  change_color_message.print_data();
 
-    let jons_age = jon.get_age();
+  let move_message = Messages::Move {x: 10, y: 20};
+  move_message.print_data();
 
-    jon.birthday();
+  None::<i32>;
 
-    Ok(())
+  Ok(())
 }
-
-struct Person {
-    age: i32,
-    name: String,
-}
-
-impl Person {
-    fn new(age: i32, name: String) -> Self {
-        Person { age: age, name: name }
-    }
-
-    fn get_age(&self) -> i32 {
-        self.age
-    }
-
-    fn birthday(&mut self) {
-        self.age = self.age + 1
-    }
-}
-
-
 
 
 #[cfg(test)]

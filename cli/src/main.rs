@@ -1,18 +1,47 @@
 use std::{error::Error, fmt};
 
+
+struct PointOld {
+    x: i32,
+    y: i32,
+}
+
+impl fmt::Display for PointOld {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }    
+}
+
 struct Point<T> {
     x: T,
     y: T,
 }
+/*
+impl fmt::Display for Point<i32> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }    
+}
+*/
+
+/*
+impl<T: fmt::Display> fmt::Display for Point<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }    
+}
+*/
+
+impl <T> fmt::Display for Point<T>
+where T: fmt::Display {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }    
+}
 
 impl<T> Point<T> {
-    fn new(x: T, y: T) -> Self {
-        Self { x, y }
-    }
-
-    fn new_default() -> Self 
-    where T: Default {
-        Self { x: T::default(), y: T::default() }
+    fn new(x: T, y: T) -> Point<T> {
+        Self{x,y}
     }
 
     fn update(&mut self, x: T, y: T) {
@@ -21,73 +50,20 @@ impl<T> Point<T> {
     }
 }
 
-/*
-impl fmt::Display for Point<i32> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.x, self.y)
-    }    
-}
-*/
-/*
-impl<T> fmt::Display for Point<T> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.x, self.y)
-    }    
-}
- */
-
-/*
-impl<T: fmt::Display> fmt::Display for Point<T> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.x, self.y)
-    }
-}
-*/
-
-impl <T> fmt::Display for Point<T> 
-where T: fmt::Display {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.x, self.y)
-    }    
-}
-
-
-struct OldPoint {
-    x: i32,
-    y: i32,
-}
-
-impl fmt::Display for OldPoint {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.x, self.y)
-    }    
-}
-
 fn main() -> Result<(),Box<dyn Error>> {
-
-    let p = OldPoint { x: 5, y: 10 };
-    let p2 = Point { x: 5, y: 10 };
-    let p3 = Point { x: 5.0, y: 10.0 };
-    println!("p3: {}", p2);
-    let p4 = Point { x: "Hello", y: "World" };
-    //let p5 = Point::new_default();
-    let p6: Point<i32> = Point::new_default();
-    let p7 = Point::<i32>::new_default();
-    let mut p8 = Point::new_default();
-    p8.update(1, 5);
-
-    println!("p8: {}", p8);
-
-    print_point(p2);
-
-    let mut hm = std::collections::HashMap::new();
-    hm.insert("Hello", "World");
-
+    let x = 5;
+    let old_point = PointOld {x: 5, y: 10};
+    let new_point: Point<String> = Point {x: 5, y: 10};
+    println!("new point: {}", new_point);
+    let old_point_2 = PointOld {x: 2, y: 2};
+    let new_point_2 = Point {x: old_point, y: old_point_2};
+    println!("point of PointOlds: {}", new_point_2);
+    print_point(new_point_2);
     Ok(())
 }
 
-fn print_point<T: fmt::Display>(p: Point<T>)  {
-    println!("print: {}", p);
+fn print_point<T: fmt::Display>(p: Point<T>) {
+    println!("our point: {}", p);
 }
 
 fn print_point2<T>(p: Point<T>) 
@@ -96,9 +72,9 @@ where T: fmt::Display {
 }
 
 
-
 #[cfg(test)]
 mod tests {
    
 
 }
+

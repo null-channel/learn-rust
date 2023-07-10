@@ -5,7 +5,7 @@ struct OldPoint {
     x: i32,
     y: i32,
 }
-
+// Implementing the Display trait for OldPoint
 impl fmt::Display for OldPoint {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({}, {})", self.x, self.y)

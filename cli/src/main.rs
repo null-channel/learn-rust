@@ -1,12 +1,12 @@
 use std::{error::Error, fmt};
 
-
-struct PointOld {
+#[derive(Debug,PartialEq)]
+struct OldPoint {
     x: i32,
     y: i32,
 }
 
-impl fmt::Display for PointOld {
+impl fmt::Display for OldPoint {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({}, {})", self.x, self.y)
     }    
@@ -16,6 +16,7 @@ struct Point<T> {
     x: T,
     y: T,
 }
+
 /*
 impl fmt::Display for Point<i32> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -52,10 +53,10 @@ impl<T> Point<T> {
 
 fn main() -> Result<(),Box<dyn Error>> {
     let x = 5;
-    let old_point = PointOld {x: 5, y: 10};
-    let new_point: Point<String> = Point {x: 5, y: 10};
+    let old_point = OldPoint {x: 5, y: 10};
+    let new_point: Point<String> = Point {x: "5".to_string(), y: "10".to_string()};
     println!("new point: {}", new_point);
-    let old_point_2 = PointOld {x: 2, y: 2};
+    let old_point_2 = OldPoint {x: 2, y: 2};
     let new_point_2 = Point {x: old_point, y: old_point_2};
     println!("point of PointOlds: {}", new_point_2);
     print_point(new_point_2);
@@ -74,7 +75,6 @@ where T: fmt::Display {
 
 #[cfg(test)]
 mod tests {
-   
 
 }
 

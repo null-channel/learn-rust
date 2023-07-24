@@ -10,6 +10,7 @@ async fn main() -> Result<()>{
     println!("follow redirects: {}", args.follow_redirects);
 
     let result = reqwest::get(args.url).await?;
+    
 
     let body = result.text().await?;
 
